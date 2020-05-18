@@ -10,6 +10,40 @@ A simple docker container to connect to an espcam32 (via [esphome](https://githu
 $ docker build -t s3-espcam .
 ```
 
+## Permissions ##
+
+Unless you're running this in AWS with a tunnel to the camera, youll need to create an IAM user with these permissions:
+
+```
+resource "aws_iam_user" "s3-espcam" {
+  name = "s3-espcam"
+  path = "/"
+}
+
+resource "aws_iam_user_policy" "s3-espcam" {
+  name = "s3-espcam"
+  user = aws_iam_user.s3-espcam.name
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "s3:Put*"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "arn:aws:s3:::my-bucket/*",
+        "arn:aws:s3:::my-bucket"
+      ]
+    }
+  ]
+}
+EOF
+}
+```
+
 ## Running ##
 
 ```
