@@ -1,7 +1,7 @@
 S3 ESPCAM32
 ===========
 
-A simple docker container to connect to an espcam32 and upload the images to s3
+A simple docker container to connect to an espcam32 (via [esphome](https://github.com/esphome/aioesphomeapi) )and upload the images to s3
 
 
 ## Building ##
